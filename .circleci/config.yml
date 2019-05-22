@@ -1,0 +1,31 @@
+version: 2
+jobs:
+  test:
+    docker:
+    - image: circleci/android:api-25-alpha
+    steps:
+    - add_ssh_keys:
+        fingerprints:
+        - "70:eb:c8:a8:ef:51:c8:b9:38:ac:97:12:52:39:5a:eb"
+    - checkout
+    - run:
+        name: Dart
+        command: |
+          wget https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_v1.0.0-stable.tar.xz
+          tar xf flutter_linux_v1.0.0-stable.tar.xz
+    - run:
+        name: Test
+        command: |
+          cat pubspec.yaml
+          ./flutter/bin/flutter packages get
+          ./flutter/bin/cache/dart-sdk/bin/dartanalyzer lib/src/**/*.dart
+
+          git config --global user.email circleci@circleci.com
+          git config --global user.name CircleCI
+          git add 'pubspec.yaml'
+          git diff-index --quiet --cached origin/$CIRCLE_BRANCH || (git commit -m 'Lock [skip ci]' && git push)
+workflows:
+  version: 2
+  release:
+    jobs:
+    - test
