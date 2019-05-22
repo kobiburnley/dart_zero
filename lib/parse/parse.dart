@@ -2,14 +2,14 @@ Iterable<T> parseIterable<T>(dynamic list, T fn(dynamic o), {Iterable<T> orElse(
   if (list is Iterable) {
     return list.map(fn);
   }
-  return orElse() ?? [];
+  return orElse?.call() ?? [];
 }
 
 List<T> parseList<T>(dynamic list, T fn(dynamic o), {Iterable<T> orElse()}) {
   if (list is Iterable) {
     return list.map(fn).toList();
   }
-  return orElse() ?? [];
+  return orElse?.call() ?? [];
 }
 
 String parseString(dynamic s, {String orElse = ''}) {
