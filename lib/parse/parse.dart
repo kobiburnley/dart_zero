@@ -73,6 +73,13 @@ int parseInt(dynamic n, {int orElse = 0}) {
   return orElse;
 }
 
+bool parseBool(dynamic b, {bool orElse = false}) {
+  if (b is bool) {
+    return b;
+  }
+  return orElse;
+}
+
 num parseNum(dynamic n, {num orElse = 0}) {
   if (n is num) {
     return n;
