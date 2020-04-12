@@ -1,7 +1,6 @@
 List<T> reorder<T>(Iterable<T> list, int oldIndex, int newIndex) {
-  if (newIndex > oldIndex) {
-    newIndex -= 1;
-  }
+  if(oldIndex < 0 || oldIndex > list.length - 1) return list;
+  if(newIndex < 0 || newIndex > list.length - 1) return list;
   List<T> newList = [];
   newList.addAll(list);
   final item = newList.removeAt(oldIndex);
